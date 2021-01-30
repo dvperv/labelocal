@@ -15,7 +15,7 @@
     <Config msg="Добро пожаловать"/>
     <section class="hero">
       <div class="container">
-        <DirSelector/>
+        <DirSelector root="/"/>
       </div>
     </section>
     <FileViewer/>
