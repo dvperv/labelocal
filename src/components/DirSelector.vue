@@ -2,7 +2,7 @@
   <section>
     <b-menu>
       <b-menu-list label="Файлы">
-        <b-menu-item icon="home" label="Info"></b-menu-item>
+        <b-menu-item icon="home" size="is-medium" label="Info"></b-menu-item>
         <b-menu-item icon="folder" :active="isActive" expanded>
           <template #label="props">
             Administrator
