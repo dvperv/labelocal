@@ -13,6 +13,11 @@
       </div>
     </section>
     <Config msg="Добро пожаловать"/>
+    <section class="hero">
+      <div class="container">
+        <DirSelector/>
+      </div>
+    </section>
     <FileViewer/>
   </div>
 
@@ -21,10 +26,12 @@
 <script>
 import Config from './components/Config.vue'
 import FileViewer from "@/components/FileViewer";
+import DirSelector from "@/components/DirSelector";
 
 export default {
   name: 'App',
   components: {
+    DirSelector,
     FileViewer,
     Config
   }

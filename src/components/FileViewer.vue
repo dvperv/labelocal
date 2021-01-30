@@ -4,14 +4,12 @@
 
     <div class="container has-text-centered">
       <p>File  Viewer</p>
-      <p>{{this.info.res}}</p>
+      <p>{{this.info.grayscale255}}</p>
     </div>
   </section>
 </template>
 
 <script>
-// import ReadFile from '../remote.file.js'
-
 import axios from "axios";
 
 export default {
@@ -23,7 +21,7 @@ export default {
   },
   mounted() {
     axios
-        .get('http://localhost:3000/file')
+        .get(' https://labelocalapi2.herokuapp.com/file')
         .then(response => (this.info = response));
   }
 }
