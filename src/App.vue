@@ -1,28 +1,36 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <h1 class="title">
+            Local Star Labeller
+          </h1>
+          <figure class="image is-128x128 is-inline-block">
+            <img src="./assets/logo.png"/>
+          </figure>
+        </div>
+      </div>
+    </section>
+    <Config msg="Добро пожаловать"/>
+    <FileViewer/>
   </div>
+
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Config from './components/Config.vue'
+import FileViewer from "@/components/FileViewer";
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    FileViewer,
+    Config
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
