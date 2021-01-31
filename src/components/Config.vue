@@ -1,21 +1,21 @@
 <template>
-  <div class="container has-text-centered">
-    <h1>{{ msg }}</h1>
-    <FileSelector></FileSelector>
-
+  <div class="container has-text-centered is-fluid ">
+    <div class="columns">
+      <div class="column"></div>
+      <div class="column">
+        <DirSelector root="/" class="has-text-left"></DirSelector>
+      </div>
+      <div class="column"></div>
+    </div>
   </div>
 </template>
 
 <script>
-import FileSelector from "@/components/FileSelector";
-
+import DirSelector from "@/components/DirSelector";
 export default {
   name: 'Config',
-  props: {
-    msg: String
-  },
   components: {
-    FileSelector
+    DirSelector
   }
 }
 </script>
