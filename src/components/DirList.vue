@@ -1,5 +1,5 @@
 <template>
-  <section class="is-fullheight">
+  <section>
   <b-menu >
       <b-button @click="onUp" icon-left="folder-upload-outline" type="is-primary is-light" outlined></b-button>
       <b-menu-list v-if="root" v-bind:label="cRoot" >

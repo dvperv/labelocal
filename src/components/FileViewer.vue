@@ -1,7 +1,26 @@
 <template>
   <section>
     <div class="container has-text-centered">
-      <h2><strong>Pic</strong></h2>
+      <h2><strong>Pic</strong>
+        <div class="block">
+          <b-radio v-model="checked_pic_class"
+                   name="picture_class"
+                   native-value="yes">
+            <b-icon icon="check-all" type="is-success"></b-icon>
+          </b-radio>
+          <b-radio v-model="checked_pic_class"
+                   name="picture_class"
+                   native-value="no">
+            <b-icon icon="skull-crossbones-outline" type="is-danger"></b-icon>
+          </b-radio>
+          <b-radio v-model="checked_pic_class"
+                   name="picture_class"
+                   native-value="uncertain">
+            <b-icon icon="help-circle-outline" type="is-warning"></b-icon>
+          </b-radio>
+          <b-button icon-left="cancel" rounded>Удалить</b-button>
+        </div>
+        </h2>
       <div class="columns">
         <div class="column"></div>
         <div class="column is-three-quarters">
