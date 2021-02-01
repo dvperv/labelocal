@@ -1,13 +1,15 @@
 <template>
-  <div class="container has-text-centered is-fluid ">
-    <div class="columns">
-      <div class="column"></div>
-      <div class="column">
-        <DirSelector root="/" class="has-text-left"></DirSelector>
+  <section>
+    <div class="container has-text-centered is-fluid ">
+      <div class="columns">
+        <div class="column"></div>
+        <div class="column">
+          <DirSelector root="/home/dmitriy/transients" class="has-text-left"></DirSelector>
+        </div>
+        <div class="column"></div>
       </div>
-      <div class="column"></div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>

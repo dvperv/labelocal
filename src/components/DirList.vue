@@ -1,15 +1,17 @@
 <template>
-  <b-menu>
-    <b-button @click="onUp" icon-left="folder-upload-outline" type="is-primary is-light" outlined></b-button>
-    <b-menu-list v-if="root" v-bind:label="cRoot" >
-      <b-menu-item v-for="(i, idx) in cList"
-                   v-bind:key=idx
-                   v-bind:icon="i.isDir ? 'folder' : 'file'"
-                   v-bind:label="i.name"
-                   v-on:dblclick="onDoubleClick(i.name, i.isDir)"
-      />
-    </b-menu-list>
-  </b-menu>
+  <section class="is-fullheight">
+  <b-menu >
+      <b-button @click="onUp" icon-left="folder-upload-outline" type="is-primary is-light" outlined></b-button>
+      <b-menu-list v-if="root" v-bind:label="cRoot" >
+        <b-menu-item v-for="(i, idx) in cList"
+                     v-bind:key=idx
+                     v-bind:icon="i.isDir ? 'folder' : 'file'"
+                     v-bind:label="i.name"
+                     v-on:dblclick="onDoubleClick(i.name, i.isDir)"
+        />
+      </b-menu-list>
+    </b-menu>
+  </section>
 </template>
 
 <script>
