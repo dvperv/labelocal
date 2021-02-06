@@ -106,19 +106,25 @@ export default {
           .get(apiMetaUrl + '/' + this.fileIndex)
           .then(response => {
             this.meta = response.data;
-            this.radio = this.meta.label;
+            this.radio = (this.meta ? this.meta.label : null);
             }, reason => {this.metaError = reason});
 
     },
     insertMeta(){
       axios
           .post(apiMetaUrl, this.meta)
-          .then(response => (this.meta = response.data), reason => {this.metaError = reason});
+          .then(response => {
+            this.meta = response.data;
+            this.radio = (this.meta ? this.meta.label : null);
+          }, reason => {this.metaError = reason});
     },
     updateMeta(){
       axios
           .put(apiMetaUrl + '/' + this.fileIndex, this.meta)
-          .then(response => (this.meta = response.data), reason => {this.metaError = reason});
+          .then(response => {
+            this.meta = response.data;
+            this.radio = (this.meta ? this.meta.label : null);
+          }, reason => {this.metaError = reason});
     },
     deleteMeta(){
       axios
