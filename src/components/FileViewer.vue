@@ -9,17 +9,20 @@
 <!--          <img src="https://www.torontozoo.com/img/1200/20180605032116763AfricanLion.jpg">-->
           <div class="notification is-vcentered">
             <div class="block">
-              <b-radio v-model="radio" size="is-large" name="picture_class" native-value="yes">
+              <b-radio v-model="radio" size="is-large" name="picture_class" native-value="Y" v-on:input="upsert">
                 <b-icon icon="check-all" type="is-success"></b-icon>
               </b-radio>
-              <b-radio v-model="radio" size="is-large" name="picture_class" native-value="no">
+              <b-radio v-model="radio" size="is-large" name="picture_class" native-value="N" v-on:input="upsert">
                 <b-icon icon="skull-crossbones-outline" type="is-danger"></b-icon>
               </b-radio>
-              <b-radio v-model="radio" size="is-large" name="picture_class" native-value="uncertain">
+              <b-radio v-model="radio" size="is-large" name="picture_class" native-value="U" v-on:input="upsert">
                 <b-icon icon="help-circle-outline" type="is-warning"></b-icon>
               </b-radio>
-              <b-button icon-left="cancel" rounded>Удалить</b-button>
+              <b-button icon-left="cancel" rounded v-on:click="deleteMeta">Удалить</b-button>
             </div>
+            <b-message v-if="metaError" title="Ошибка базы данных" type="is-danger" has-icon aria-close-label="Закрыть">
+              При фиксации изменений в базе данных произошла ошибка. Операция фиксации <b>не выполнена</b>.
+            </b-message>
           </div>
         </div>
         <div class="column"></div>
@@ -30,7 +33,9 @@
 
 <script>
 import axios from "axios";
-import {fileIndex} from "@/services/services";
+import s from "@/services/services";
+
+const apiMetaUrl = 'https://labelocalapi2.herokuapp.com/api/meta';
 
 export default {
   name: "FileViewer",
@@ -41,6 +46,8 @@ export default {
     return {
       info: null,
       picData: null,
+      meta: null,
+      metaError: null,
       radio: null,
     };
   },
@@ -59,21 +66,65 @@ export default {
       canvas.width = this.info.data.npoints;
       canvas.height = this.info.data.nbands + 1;
       let ctx = canvas.getContext('2d');
-      console.log('info length: ' + this.info.data.grayscale255.length +' for: ' + this.path);
       ctx.putImageData(new ImageData(res, this.info.data.npoints, this.info.data.nbands + 1),0,0);
       this.picData = canvas.toDataURL('image/png');
     },
-    radio(){
-      console.log(this.radio)
-      fileIndex(this.path);
-      //TODO upsert record
-    }
   },
   mounted() {
     if(this.path) {
       axios
           .post(' https://labelocalapi2.herokuapp.com/file', {path: this.path})
           .then(response => (this.info = response));
+      this.getMeta();
+    }
+  },
+  computed: {
+    pathHigh() {
+      return this.$store.state.pathHigh
+    },
+    pathLow() {
+      return this.$store.state.pathLow
+    },
+    fileIndex() { return s.fileIndex(this.path, this.pathHigh, this.pathLow) },
+  },
+  methods: {
+    upsert(){
+      if (this.meta) {
+        this.meta.label = this.radio;
+        this.updateMeta();
+      }
+      else {
+        this.meta = {
+          _id: this.fileIndex,
+          label: this.radio,
+        }
+        this.insertMeta();
+      }
+    },
+    getMeta(){ // gets a current metadata for this particular file
+      axios
+          .get(apiMetaUrl + '/' + this.fileIndex)
+          .then(response => {
+            this.meta = response.data;
+            this.radio = this.meta.label;
+            }, reason => {this.metaError = reason});
+
+    },
+    insertMeta(){
+      axios
+          .post(apiMetaUrl, this.meta)
+          .then(response => (this.meta = response.data), reason => {this.metaError = reason});
+    },
+    updateMeta(){
+      axios
+          .put(apiMetaUrl + '/' + this.fileIndex, this.meta)
+          .then(response => (this.meta = response.data), reason => {this.metaError = reason});
+    },
+    deleteMeta(){
+      axios
+          .delete(apiMetaUrl + '/' + this.fileIndex)
+          // eslint-disable-next-line no-unused-vars
+          .then(response => (this.meta = null), reason => {this.metaError = reason});
     }
   }
 }

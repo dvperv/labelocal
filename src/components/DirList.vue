@@ -9,7 +9,7 @@
       <b-menu-list v-if="root" v-bind:label="cRoot" >
         <b-menu-item v-for="(i, idx) in cList"
                      v-bind:key=idx
-                     v-bind:icon="i.isDir ? 'folder' : 'file'"
+                     v-bind:icon="icon(i)"
                      v-bind:label="i.name"
                      v-on:dblclick="onDoubleClick(i.name, i.isDir)"
                      v-on:click="onSelect(i.name)"
@@ -45,6 +45,10 @@ export default {
     this.getList();
   },
   methods:{
+    icon(i){
+      if (i.isDir) return 'folder';
+      return 'file'
+    },
     onDoubleClick(newRoot, isDir){
       if (this.dblClicked) return;
       if (isDir) {
