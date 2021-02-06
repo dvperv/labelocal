@@ -124,7 +124,10 @@ export default {
       axios
           .delete(apiMetaUrl + '/' + this.fileIndex)
           // eslint-disable-next-line no-unused-vars
-          .then(response => (this.meta = null), reason => {this.metaError = reason});
+          .then(response => {
+            this.meta = null;
+            this.radio = null;
+          }, reason => {this.metaError = reason});
     }
   }
 }
