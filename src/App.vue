@@ -38,6 +38,7 @@
       </div>
     </section>
     <Config/>
+
   </div>
 
 </template>
