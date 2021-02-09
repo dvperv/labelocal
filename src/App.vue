@@ -9,7 +9,8 @@
           <figure class="image is-128x128 is-inline-block">
             <img src="./assets/logo.png"/>
           </figure>
-          <b-message title="Коротко о главном..." type="is-warning" has-icon aria-close-label="Закрыть">
+          <div><b-button type="is-warning" icon-left="help-circle-outline" @click="isActive = !isActive"/></div>
+          <b-message title="Коротко о главном..." type="is-warning" v-model="isActive" has-icon aria-close-label="Закрыть">
             <h2><strong>О системе</strong></h2>
             <p>Текущая конфигурация: файлы с сервера обсерватории,
               оба сервера приложений работают на бесплатном хостинге (могут отваливаться, это не страшно).
@@ -49,6 +50,11 @@ export default {
   name: 'App',
   components: {
     Config
+  },
+  data() {
+    return {
+      isActive: false
+    }
   }
 }
 </script>
