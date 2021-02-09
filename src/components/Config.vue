@@ -11,7 +11,7 @@
             <b-button type="is-primary" outlined icon-left="logout" v-if="$auth.isAuthenticated" @click="logout">Log out</b-button>
           </div>
         </div>
-        <div class="column" v-if="$auth.isAuthenticated" >
+        <div class="column" v-if="$auth.isAuthenticated && false" >
           <b-collapse aria-id="contentIdForA11y2" class="panel" animation="slide" :open="false">
             <template #trigger>
               <div

@@ -3,12 +3,12 @@
     <section class="hero">
       <div class="hero-body">
         <div class="container has-text-centered">
+          <figure class="image is-64x64 is-inline-block">
+            <img src="./assets/logo.png"/>
+          </figure>
           <h1 class="title">
             Local Star Labeller
           </h1>
-          <figure class="image is-128x128 is-inline-block">
-            <img src="./assets/logo.png"/>
-          </figure>
           <div><b-button type="is-warning" icon-left="help-circle-outline" @click="isActive = !isActive"/></div>
           <b-message title="Коротко о главном..." type="is-warning" v-model="isActive" has-icon aria-close-label="Закрыть">
             <h2><strong>О системе</strong></h2>
@@ -38,9 +38,7 @@
       </div>
     </section>
     <Config/>
-
   </div>
-
 </template>
 
 <script>
