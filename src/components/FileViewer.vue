@@ -66,9 +66,6 @@ export default {
       canvas.height = this.info.data.npoints;
       let ctx = canvas.getContext('2d');
       ctx.putImageData(new ImageData(res, this.info.data.nbands + 1, this.info.data.npoints),0,0);
-      //add rotate flip
-
-
       this.picData = canvas.toDataURL('image/png');
     },
   },
@@ -142,7 +139,7 @@ export default {
 </script>
 
 <style scoped>
-  .rotated {
-    transform:scaleX(-1) rotate(90deg) ;
-  }
+  /*.rotated {*/
+  /*  transform: scaleX(-1) rotate(90deg);*/
+  /*}*/
 </style>
