@@ -4,9 +4,8 @@
       <h2><strong>Транзиент</strong></h2>
       <div class="columns">
         <div class="column"></div>
-        <div class="column is-three-quarters">
+        <div class="column is-half">
           <b-image v-bind:src=picData></b-image>
-<!--          <img src="https://www.torontozoo.com/img/1200/20180605032116763AfricanLion.jpg">-->
           <div class="notification is-vcentered">
             <div class="block">
               <b-radio v-model="radio" size="is-large" name="picture_class" native-value="Y" v-on:input="upsert">
