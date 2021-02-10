@@ -53,8 +53,14 @@ export default {
   watch: {
     info(){
       let res = new Uint8ClampedArray(this.info.data.grayscale255.length * 4);
+      const newGS = this.rotate(
+          this.hFlip(this.info.data.grayscale255, this.info.data.nbands + 1, this.info.data.npoints),
+          this.info.data.nbands + 1, this.info.data.npoints
+      );
+      // console.log(this.hFlip([1,2,3,4,5,6], 2, 3));
       let i = 0;
-      this.info.data.grayscale255.forEach(el => {
+      // this.info.data.grayscale255.forEach(el => {
+      newGS.forEach(el => {
         res[i]     = el;
         res[i + 1] = el;
         res[i + 2] = el;
@@ -62,10 +68,13 @@ export default {
         i += 4;
       });
       let canvas  = document.createElement('canvas');
-      canvas.width = this.info.data.nbands + 1;
-      canvas.height = this.info.data.npoints;
+      // canvas.width = this.info.data.nbands + 1;
+      // canvas.height = this.info.data.npoints;
+      canvas.width = this.info.data.npoints;
+      canvas.height = this.info.data.nbands + 1;
       let ctx = canvas.getContext('2d');
-      ctx.putImageData(new ImageData(res, this.info.data.nbands + 1, this.info.data.npoints),0,0);
+      // ctx.putImageData(new ImageData(res, this.info.data.nbands + 1, this.info.data.npoints),0,0);
+      ctx.putImageData(new ImageData(res, this.info.data.npoints, this.info.data.nbands + 1),0,0);
       this.picData = canvas.toDataURL('image/png');
     },
   },
@@ -134,6 +143,22 @@ export default {
             this.radio = null;
           }, reason => {this.metaError = reason});
     },
+    hFlip(array, width, height){
+      for (let i = 0; i < height; i++)
+        for (let j = 0; j < width/2; j++) {
+          const tmp = array[i*width + j];
+          array[i*width + j] = array[i*width + (width - j - 1)];
+          array[i*width + (width - j - 1)] = tmp;
+        }
+      return array;
+    },
+    rotate(old, width, height){
+      const array = old.slice();
+      for (let i = 0; i < height; i++)
+        for (let j = 0; j < width; j++)
+          array[(width - j - 1) * height + i] = old[i * width + j];
+      return array;
+    }
   }
 }
 </script>
