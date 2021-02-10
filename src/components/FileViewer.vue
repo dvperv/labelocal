@@ -5,7 +5,7 @@
       <div class="columns">
         <div class="column"></div>
         <div class="column is-half">
-          <b-image v-bind:src=picData></b-image>
+          <b-image v-bind:src=picData class="rotated"></b-image>
           <div class="notification is-vcentered">
             <div class="block">
               <b-radio v-model="radio" size="is-large" name="picture_class" native-value="Y" v-on:input="upsert">
@@ -62,10 +62,13 @@ export default {
         i += 4;
       });
       let canvas  = document.createElement('canvas');
-      canvas.width = this.info.data.npoints;
-      canvas.height = this.info.data.nbands + 1;
+      canvas.width = this.info.data.nbands + 1;
+      canvas.height = this.info.data.npoints;
       let ctx = canvas.getContext('2d');
-      ctx.putImageData(new ImageData(res, this.info.data.npoints, this.info.data.nbands + 1),0,0);
+      ctx.putImageData(new ImageData(res, this.info.data.nbands + 1, this.info.data.npoints),0,0);
+      //add rotate flip
+
+
       this.picData = canvas.toDataURL('image/png');
     },
   },
@@ -133,11 +136,13 @@ export default {
             this.meta = null;
             this.radio = null;
           }, reason => {this.metaError = reason});
-    }
+    },
   }
 }
 </script>
 
 <style scoped>
-
+  .rotated {
+    transform:scaleX(-1) rotate(90deg) ;
+  }
 </style>
