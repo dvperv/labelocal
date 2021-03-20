@@ -79,12 +79,18 @@ export default {
     },
   },
   mounted() {
-    if(this.path) {
-      axios
-          .post(' https://labelocalapi2.herokuapp.com/file', {path: this.path})
-          .then(response => (this.info = response));
-      this.getMeta();
-    }
+    this.$auth.getTokenSilently().then(token => {
+      this.headers = {
+        Authorization: `Bearer ${token}`    // send the access token through the 'Authorization' header
+      };
+      // console.log('TOKEN:' + this.headers.Authorization);
+      if (this.path) {
+        axios
+            .post(' https://labelocalapi2.herokuapp.com/file', {path: this.path}, this.headers)
+            .then(response => (this.info = response));
+        this.getMeta();
+      }
+    })
   },
   computed: {
     pathHigh() {
@@ -111,7 +117,7 @@ export default {
     },
     getMeta(){ // gets a current metadata for this particular file
       axios
-          .get(apiMetaUrl + '/' + this.fileIndex)
+          .get(apiMetaUrl + '/' + this.fileIndex, this.headers)
           .then(response => {
             this.meta = response.data;
             this.radio = (this.meta ? this.meta.label : null);
@@ -120,7 +126,7 @@ export default {
     },
     insertMeta(){
       axios
-          .post(apiMetaUrl, this.meta)
+          .post(apiMetaUrl, this.meta, this.headers)
           .then(response => {
             this.meta = response.data;
             this.radio = (this.meta ? this.meta.label : null);
@@ -128,7 +134,7 @@ export default {
     },
     updateMeta(){
       axios
-          .put(apiMetaUrl + '/' + this.fileIndex, this.meta)
+          .put(apiMetaUrl + '/' + this.fileIndex, this.meta, this.headers)
           .then(response => {
             this.meta = response.data;
             this.radio = (this.meta ? this.meta.label : null);
@@ -136,7 +142,7 @@ export default {
     },
     deleteMeta(){
       axios
-          .delete(apiMetaUrl + '/' + this.fileIndex)
+          .delete(apiMetaUrl + '/' + this.fileIndex, this.headers)
           // eslint-disable-next-line no-unused-vars
           .then(response => {
             this.meta = null;

@@ -41,6 +41,11 @@ export default {
     };
   },
   mounted() {
+    this.$auth.getTokenSilently().then(token => {
+      this.headers = {
+        Authorization: `Bearer ${token}`    // send the access token through the 'Authorization' header
+      };
+    });
     this.cRoot = this.root;
     this.getList();
   },
@@ -63,9 +68,9 @@ export default {
       this.selected = s
     },
     getList(){
-      if (this.cRoot)
+      if (this.cRoot && this.headers)
         axios
-            .post(' https://labelocalapi2.herokuapp.com/dir', { path: this.cRoot })
+            .post(' https://labelocalapi2.herokuapp.com/dir', { path: this.cRoot }, this.headers)
             .then(response => (this.cList = response.data.list));
     },
     onUp(){

@@ -1,4 +1,5 @@
 {
   "domain": "dev-buikfqx3.eu.auth0.com",
-  "clientId": "dlXtciqQMmBcTvfkzTKcZ4NLJMyDwBzo"
+  "clientId": "dlXtciqQMmBcTvfkzTKcZ4NLJMyDwBzo",
+  "audience": "https://labelocal.onrender.com/"
 }
