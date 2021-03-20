@@ -45,9 +45,10 @@ export default {
       this.headers = {
         Authorization: `Bearer ${token}`    // send the access token through the 'Authorization' header
       };
+      // console.log('Token on mounted:' + this.headers.Authorization)
+      this.cRoot = this.root;
+      this.getList();
     });
-    this.cRoot = this.root;
-    this.getList();
   },
   methods:{
     icon(i){
@@ -68,6 +69,7 @@ export default {
       this.selected = s
     },
     getList(){
+      // console.log('Token on getList:' + this.headers.Authorization)
       if (this.cRoot && this.headers)
         axios
             .post(' https://labelocalapi2.herokuapp.com/dir', { path: this.cRoot }, this.headers)
