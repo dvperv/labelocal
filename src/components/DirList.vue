@@ -25,6 +25,7 @@
 <script>
 import axios from "axios";
 import FileViewer from "@/components/FileViewer";
+import c from "../config.js"
 
 export default {
   name: "DirList",
@@ -69,11 +70,12 @@ export default {
       this.selected = s
     },
     getList(){
-      // console.log('Token on getList:' + this.headers.Authorization)
-      if (this.cRoot && this.headers)
+      if (this.cRoot && this.headers) {
+        console.log('Token on getList:' + this.headers.Authorization)
         axios
-            .post(' https://labelocalapi2.herokuapp.com/dir', { path: this.cRoot }, this.headers)
+            .post(`${c.api.path}/dir`, {path: this.cRoot}, {headers: this.headers})
             .then(response => (this.cList = response.data.list));
+      }
     },
     onUp(){
       this.cRoot = this.getParentPath(this.cRoot);

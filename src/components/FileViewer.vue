@@ -33,8 +33,9 @@
 <script>
 import axios from "axios";
 import s from "@/services/services";
+import c from "../config.js"
 
-const apiMetaUrl = 'https://labelocalapi2.herokuapp.com/api/meta';
+const apiMetaUrl = `${c.api.path}/api/meta`;
 
 export default {
   name: "FileViewer",
@@ -81,12 +82,12 @@ export default {
   mounted() {
     this.$auth.getTokenSilently().then(token => {
       this.headers = {
-        Authorization: `Bearer ${token}`    // send the access token through the 'Authorization' header
+        Authorization: `Bearer ${token}`,    // send the access token through the 'Authorization' header
       };
       // console.log('TOKEN:' + this.headers.Authorization);
       if (this.path) {
         axios
-            .post(' https://labelocalapi2.herokuapp.com/file', {path: this.path}, this.headers)
+            .post(`${c.api.path}/file`, {path: this.path}, { headers: this.headers})
             .then(response => (this.info = response));
         this.getMeta();
       }
@@ -116,9 +117,11 @@ export default {
       }
     },
     getMeta(){ // gets a current metadata for this particular file
+      console.log(`${apiMetaUrl}/${this.fileIndex}`)
       axios
-          .get(apiMetaUrl + '/' + this.fileIndex, this.headers)
+          .get(`${apiMetaUrl}/${this.fileIndex}`, { headers: this.headers})
           .then(response => {
+            console.dir(response.data);
             this.meta = response.data;
             this.radio = (this.meta ? this.meta.label : null);
             }, reason => {this.metaError = reason});
@@ -126,7 +129,7 @@ export default {
     },
     insertMeta(){
       axios
-          .post(apiMetaUrl, this.meta, this.headers)
+          .post(apiMetaUrl, this.meta, { headers: this.headers})
           .then(response => {
             this.meta = response.data;
             this.radio = (this.meta ? this.meta.label : null);
@@ -134,7 +137,7 @@ export default {
     },
     updateMeta(){
       axios
-          .put(apiMetaUrl + '/' + this.fileIndex, this.meta, this.headers)
+          .put(apiMetaUrl + '/' + this.fileIndex, this.meta, { headers: this.headers})
           .then(response => {
             this.meta = response.data;
             this.radio = (this.meta ? this.meta.label : null);
@@ -142,7 +145,7 @@ export default {
     },
     deleteMeta(){
       axios
-          .delete(apiMetaUrl + '/' + this.fileIndex, this.headers)
+          .delete(apiMetaUrl + '/' + this.fileIndex, { headers: this.headers})
           // eslint-disable-next-line no-unused-vars
           .then(response => {
             this.meta = null;
